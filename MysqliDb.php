@@ -98,7 +98,14 @@ class MysqliDB {
 	 */
 	public function rawQuery($query, $bindParams = NULL) 
 	{
-		$this->_query = filter_var($query, FILTER_SANITIZE_STRING);
+		/* TO-Do: 
+		 * FILTER_SANITIZE_STRING strip tags, so it won't work with smaller than comparisons...
+		 * Need to create a better function to replace this one.
+		 * $this->_query = filter_var($query, FILTER_SANITIZE_STRING);
+		 *
+		 * For the moment we don't filter the query... (not soooo bad with a prepared statement)
+		*/
+		$this->_query = $query;
 		$stmt = $this->_prepareQuery();
 
 		if (gettype($bindParams) === 'array') {
